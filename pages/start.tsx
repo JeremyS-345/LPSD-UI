@@ -1,5 +1,5 @@
 import MeatPicker from "@/components/itemSelect";
-import { Button, Stack, ToggleButton, ToggleButtonGroup } from "@mui/material";
+import { Button, Grid, Stack, ToggleButton, ToggleButtonGroup } from "@mui/material";
 import { useState } from "react";
 
 
@@ -26,34 +26,44 @@ export default function NewItem() {
     })
 
     const childToParentBucket = (bucketType: string) => {
-        itemState.bucketType = bucketType;
-        setItemState(itemState);
+        setItemState(state => {
+            return {
+                ...state,
+                bucketType: bucketType
+            }
+        })
     }
     const childToParentItem = (itemType: string) => {
-        itemState.itemType = itemType;
-        setItemState(itemState);
+        setItemState(state => {
+            return {
+                ...state,
+                itemType: itemType
+            }
+        })
     }
     const childToParentReason = (reasonType: string) => {
-        itemState.reasonType = reasonType;
-        setItemState(itemState);
+        setItemState(state => {
+            return {
+                ...state,
+                reasonType: reasonType
+            }
+        })
     }
-    // let bucketElements = bucketType.map(function(type) {
-    //     return <Button variant="contained">{type}</Button>;
-    // });
-    // let userElements = itemType.map(function(type) {
-    //     return <Button variant="contained">{type}</Button>;
-    // });
-    console.log(itemState)
+    
     return (
         <div>
-            <Stack spacing={2}>
-                <MeatPicker choices={bucketType} callback={childToParentBucket}></MeatPicker>
-                <MeatPicker choices={itemType} callback={childToParentItem}></MeatPicker>
-                <MeatPicker choices={reasonType} callback={childToParentReason}></MeatPicker>
-            </Stack>
-            {itemState.bucketType != undefined && itemState.itemType != undefined &&
-                <Button variant="contained" onClick={()=>{alert("fake submit!")}}>Submit</Button>
-            }
-        </div>
+            <Grid container spacing={1} justifyContent="center" alignItems="center">
+                <Grid item xs={12} md={6}>
+                    <Stack spacing={2}>
+                        <MeatPicker choices={bucketType} callback={childToParentBucket}></MeatPicker>
+                        <MeatPicker choices={itemType} callback={childToParentItem}></MeatPicker>
+                        <MeatPicker choices={reasonType} callback={childToParentReason}></MeatPicker>
+                    </Stack>
+                    {itemState.bucketType != undefined && itemState.itemType != undefined &&
+                        <Button variant="contained" onClick={() => { alert("fake submit!") }}>Submit</Button>
+                    }
+                </Grid>
+            </Grid>
+        </div >
     );
 }
