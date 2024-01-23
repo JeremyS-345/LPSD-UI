@@ -4,6 +4,12 @@ import { Grid } from '@mui/material';
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 
+export type ItemState = {
+  id: number | undefined,
+  bucketType: string | undefined,
+  itemType: string | undefined,
+  reasonType: string | undefined
+}
 
 export default function Home() {
   const router = useRouter()
@@ -16,11 +22,12 @@ export default function Home() {
             <link rel="icon" href="/favicon.ico" />
             <meta name="viewport" content="initial-scale=1, width=device-width" />
           </Head>
-          <Link href="/start">New Item to Bucket</Link>
-          <Button onClick={() => router.push('/start')}>
-            Click here to read more
+          <Button variant="contained" onClick={() => router.push('/start')}>
+            New bucket item
           </Button>
-          <Button variant="contained">Move Bucket</Button>
+          <Button variant="contained" onClick={() => router.push('/update')}>
+           Move bucket
+          </Button>
         </Grid>
       </Grid>
     </div>
