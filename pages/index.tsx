@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import Button from '@mui/material/Button';
-import { Grid } from '@mui/material';
+import { Grid, Typography } from '@mui/material';
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 
@@ -22,11 +22,14 @@ export default function Home() {
             <link rel="icon" href="/favicon.ico" />
             <meta name="viewport" content="initial-scale=1, width=device-width" />
           </Head>
-          <Button variant="contained" onClick={() => router.push('/start')}>
+          <Typography variant="button" display="block" gutterBottom>
+            Loss, Process, Donate+Shouldertap
+          </Typography>
+          <Button size="large" variant="contained" onClick={() => router.push('/start')}>
             New bucket item
           </Button>
-          <Button variant="contained" onClick={() => router.push('/update')}>
-           Move bucket
+          <Button sx={{ml: 2}} size="large" variant="contained" onClick={() => router.push('/update')}>
+            Move bucket
           </Button>
         </Grid>
       </Grid>

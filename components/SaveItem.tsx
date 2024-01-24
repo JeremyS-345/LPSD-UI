@@ -1,5 +1,5 @@
 import OptionPicker from "@/components/itemSelect";
-import { Button, Grid, Stack, ToggleButton, ToggleButtonGroup } from "@mui/material";
+import { Button, Grid, Stack, ToggleButton, ToggleButtonGroup, Typography } from "@mui/material";
 import { useState } from "react";
 import axios from "axios";
 import { ItemState } from "../pages/index";
@@ -68,6 +68,10 @@ export default function SaveItem(props: { itemState: ItemState }) {
         <div>
             <Grid container spacing={1} justifyContent="center" alignItems="center" marginTop={8}>
                 <Grid item xs={12} md={6}>
+                    <Typography variant="h6" gutterBottom>
+                        Log item
+                    </Typography>
+
                     <Stack spacing={2}>
                         <OptionPicker choices={bucketType} callback={childToParentBucket} defaultAlignment={itemState.bucketType} ></OptionPicker>
                         <OptionPicker choices={itemType} callback={childToParentItem} defaultAlignment={itemState.itemType}></OptionPicker>
