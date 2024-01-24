@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 
 export type ItemState = {
-  id: number | undefined,
+  id: string | undefined,
   bucketType: string | undefined,
   itemType: string | undefined,
   reasonType: string | undefined
@@ -15,8 +15,8 @@ export default function Home() {
   const router = useRouter()
   return (
     <div>
-      <Grid container spacing={1} justifyContent="center" alignItems="center">
-        <Grid item xs={12} md={6}>
+      <Grid container spacing={1} justifyContent="center" alignItems="center" marginTop={8}>
+        <Grid item xs={12} md={8}>
           <Head>
             <title>Loss n shoulder tappin</title>
             <link rel="icon" href="/favicon.ico" />

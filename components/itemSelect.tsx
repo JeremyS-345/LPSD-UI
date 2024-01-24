@@ -1,9 +1,8 @@
 import { ToggleButtonGroup, ToggleButton } from "@mui/material";
 import { useState } from "react";
 
-export default function MeatPicker(props:{choices:string[], callback:(s:string)=>void}) {
-    const [alignment, setAlignment] = useState("");
-
+export default function OptionPicker(props:{choices:string[], callback:(s:string)=>void,defaultAlignment:string|undefined}) {
+    const [alignment, setAlignment] = useState(props.defaultAlignment);
     const handleChange = (
         event: React.MouseEvent<HTMLElement>,
         newAlignment: string,

@@ -1,27 +1,27 @@
-import MeatPicker from "@/components/itemSelect";
+import OptionPicker from "@/components/itemSelect";
 import { Button, Grid, Stack, ToggleButton, ToggleButtonGroup } from "@mui/material";
 import { useState } from "react";
 import axios from "axios";
-import {ItemState} from "../pages/index";
+import { ItemState } from "../pages/index";
 
 
-let bucketType = ["loss", "process", "Donation", "Shoulder Tap"];
+let bucketType = ["loss", "process", "donation", "Shoulder Tap"];
 let itemType = ["chicken", "pork", "beef"];
 let reasonType = ["blemished", "unsightly", "no label", "close expiry"];
 
 
 
-export default function SaveItem(props:{itemState:ItemState}) {
+export default function SaveItem(props: { itemState: ItemState }) {
     let [itemState, setItemState] = useState<ItemState>(props.itemState)
     const headers = {
         'Content-Type': 'application/json',
         'X-Requested-With': null,
         'Access-Control-Allow-Origin': '*'
-      }
+    }
     const postItem = async (itemState: ItemState) => {
-        const response = await axios.post("https://8e8oow3g70.execute-api.us-east-1.amazonaws.com/dev/lpds", 
+        const response = await axios.post("https://8e8oow3g70.execute-api.us-east-1.amazonaws.com/dev/lpds",
             itemState,
-            {headers: headers});
+            { headers: headers });
         if (response.status == 202) {
             setItemState(state => {
                 return {
@@ -66,12 +66,12 @@ export default function SaveItem(props:{itemState:ItemState}) {
 
     return (
         <div>
-            <Grid container spacing={1} justifyContent="center" alignItems="center">
+            <Grid container spacing={1} justifyContent="center" alignItems="center" marginTop={8}>
                 <Grid item xs={12} md={6}>
                     <Stack spacing={2}>
-                        <MeatPicker choices={bucketType} callback={childToParentBucket}></MeatPicker>
-                        <MeatPicker choices={itemType} callback={childToParentItem}></MeatPicker>
-                        <MeatPicker choices={reasonType} callback={childToParentReason}></MeatPicker>
+                        <OptionPicker choices={bucketType} callback={childToParentBucket} defaultAlignment={itemState.bucketType} ></OptionPicker>
+                        <OptionPicker choices={itemType} callback={childToParentItem} defaultAlignment={itemState.itemType}></OptionPicker>
+                        <OptionPicker choices={reasonType} callback={childToParentReason} defaultAlignment={itemState.reasonType}></OptionPicker>
                     </Stack>
                     {itemState.bucketType != undefined && itemState.itemType != undefined &&
                         <Button variant="contained" onClick={submitData}>Submit</Button>
