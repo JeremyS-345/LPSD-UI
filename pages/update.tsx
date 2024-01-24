@@ -13,7 +13,7 @@ export default function UpdateItem() {
         id: undefined,
         bucketType: undefined,
         itemType: undefined,
-        reasonType: undefined,
+        reason: undefined,
         weight: 0
     })
     const headers = {
@@ -27,7 +27,7 @@ export default function UpdateItem() {
                 id: "qwerty1234",
                 bucketType: "donation",
                 itemType: "chicken",
-                reasonType: "blemished",
+                reason: "blemished",
                 weight: 5.5
             }
             setItemState(state => {

@@ -67,7 +67,7 @@ export default function SaveItem(props: { itemState: ItemState }) {
         setItemState(state => {
             return {
                 ...state,
-                reasonType: reasonType
+                reason: reasonType
             }
         })
     }
@@ -83,7 +83,7 @@ export default function SaveItem(props: { itemState: ItemState }) {
                     <Stack spacing={2}>
                         <OptionPicker choices={bucketType} callback={childToParentBucket} defaultAlignment={itemState.bucketType} ></OptionPicker>
                         <OptionPicker choices={itemType} callback={childToParentItem} defaultAlignment={itemState.itemType}></OptionPicker>
-                        <OptionPicker choices={reasonType} callback={childToParentReason} defaultAlignment={itemState.reasonType}></OptionPicker>
+                        <OptionPicker choices={reasonType} callback={childToParentReason} defaultAlignment={itemState.reason}></OptionPicker>
                         <TextField id="outlined-basic" label="weight" variant="outlined" required={true}
                             InputProps={{
                                 endAdornment: <InputAdornment position="end">lbs</InputAdornment>,
