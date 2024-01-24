@@ -14,7 +14,8 @@ export default function UpdateItem() {
         bucketType: undefined,
         itemType: undefined,
         reason: undefined,
-        weight: 0
+        weight: 0,
+        source: undefined
     })
     const headers = {
         'Content-Type': 'application/json',
@@ -28,7 +29,8 @@ export default function UpdateItem() {
                 bucketType: "donation",
                 itemType: "chicken",
                 reason: "blemished",
-                weight: 5.5
+                weight: 5.5,
+                source: "Mountaintop Farms"
             }
             setItemState(state => {
                 return {

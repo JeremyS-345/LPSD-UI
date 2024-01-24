@@ -1,5 +1,5 @@
 import OptionPicker from "@/components/itemSelect";
-import { Button, Grid, InputAdornment, Stack, TextField, ToggleButton, ToggleButtonGroup, Typography } from "@mui/material";
+import { Autocomplete, Button, Grid, InputAdornment, Stack, TextField, ToggleButton, ToggleButtonGroup, Typography } from "@mui/material";
 import { useState } from "react";
 import axios from "axios";
 import { ItemState } from "../pages/index";
@@ -15,7 +15,6 @@ let reasonType = ["blemished", "unsightly", "no label", "close expiry"];
 export default function SaveItem(props: { itemState: ItemState }) {
     let [itemState, setItemState] = useState<ItemState>(props.itemState)
     const router = useRouter()
-    const [weight, setWeight] = useState<number>(itemState.weight);
 
     const headers = {
         'Content-Type': 'application/json',
@@ -25,7 +24,6 @@ export default function SaveItem(props: { itemState: ItemState }) {
     const postItem = async (itemState: ItemState) => {
 
         router.push('/')
-        //itemState.weight=weight
         // const response = await axios.post("https://8e8oow3g70.execute-api.us-east-1.amazonaws.com/dev/lpds",
         //     itemState,
         //     { headers: headers });
@@ -72,6 +70,31 @@ export default function SaveItem(props: { itemState: ItemState }) {
         })
     }
 
+    const assignSource = (source: string) => {
+        setItemState(state => {
+            return {
+                ...state,
+                source: source
+            }
+        })
+    }
+
+    const assignWeight = (weight: number) => {
+        setItemState(state => {
+            return {
+                ...state,
+                weight: weight
+            }
+        })
+    }
+    const farmList = [
+        { label: 'Hillshire farms', year: 1994 },
+        { label: 'Farmers Insurance', year: 1972 },
+        { label: 'Old Country Farms', year: 1972 },
+        { label: 'Farmy McFarmface', year: 1972 },
+        { label: 'Farmers Insurance', year: 1972 },
+    ];
+
     return (
         <div>
             <Grid container spacing={1} justifyContent="center" alignItems="center" marginTop={8}>
@@ -88,14 +111,26 @@ export default function SaveItem(props: { itemState: ItemState }) {
                             InputProps={{
                                 endAdornment: <InputAdornment position="end">lbs</InputAdornment>,
                             }}
-                            value={weight}
+                            value={itemState.weight}
                             type="number"
                             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                                setWeight(event.target.valueAsNumber);
+                                assignWeight(event.target.valueAsNumber);
                             }} />
+                        <Autocomplete
+                            freeSolo
+                            disablePortal
+                            id="combo-box-demo"
+                            options={farmList}
+                            sx={{ width: 300 }}
+                            inputValue={itemState.source}
+                            onInputChange={(event, newInputValue) => {
+                                assignSource(newInputValue);
+                            }}
+                            renderInput={(params) => <TextField {...params} label="Source" />}
+                        />
                     </Stack>
-                    {itemState.bucketType != undefined && itemState.itemType != undefined && weight > 0 &&
-                        <Button variant="contained" onClick={submitData}>Submit</Button>
+                    {itemState.bucketType != undefined && itemState.itemType != undefined && itemState.weight > 0 &&
+                        <Button sx={{mt: 2}} variant="contained" onClick={submitData}>Submit</Button>
                     }
                 </Grid>
             </Grid>

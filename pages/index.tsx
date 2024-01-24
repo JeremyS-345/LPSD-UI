@@ -9,7 +9,8 @@ export type ItemState = {
   bucketType: string | undefined,
   itemType: string | undefined,
   reason: string | undefined,
-  weight: number
+  weight: number,
+  source: string | undefined
 }
 
 export default function Home() {
