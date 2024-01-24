@@ -1,5 +1,5 @@
 import OptionPicker from "@/components/itemSelect";
-import { Button, Grid, Stack, ToggleButton, ToggleButtonGroup, Typography } from "@mui/material";
+import { Button, Grid, InputAdornment, Stack, TextField, ToggleButton, ToggleButtonGroup, Typography } from "@mui/material";
 import { useState } from "react";
 import axios from "axios";
 import { ItemState } from "../pages/index";
@@ -15,14 +15,17 @@ let reasonType = ["blemished", "unsightly", "no label", "close expiry"];
 export default function SaveItem(props: { itemState: ItemState }) {
     let [itemState, setItemState] = useState<ItemState>(props.itemState)
     const router = useRouter()
+    const [weight, setWeight] = useState<number>(itemState.weight);
+
     const headers = {
         'Content-Type': 'application/json',
         'X-Requested-With': null,
         'Access-Control-Allow-Origin': '*'
     }
     const postItem = async (itemState: ItemState) => {
-        
+
         router.push('/')
+        //itemState.weight=weight
         // const response = await axios.post("https://8e8oow3g70.execute-api.us-east-1.amazonaws.com/dev/lpds",
         //     itemState,
         //     { headers: headers });
@@ -32,7 +35,8 @@ export default function SaveItem(props: { itemState: ItemState }) {
         //             id: undefined,
         //             bucketType: undefined,
         //             itemType: undefined,
-        //             reasonType: undefined
+        //             reasonType: undefined,
+        //             weight: undefined 
         //         }
         //     })
         // }
@@ -80,8 +84,17 @@ export default function SaveItem(props: { itemState: ItemState }) {
                         <OptionPicker choices={bucketType} callback={childToParentBucket} defaultAlignment={itemState.bucketType} ></OptionPicker>
                         <OptionPicker choices={itemType} callback={childToParentItem} defaultAlignment={itemState.itemType}></OptionPicker>
                         <OptionPicker choices={reasonType} callback={childToParentReason} defaultAlignment={itemState.reasonType}></OptionPicker>
+                        <TextField id="outlined-basic" label="weight" variant="outlined" required={true}
+                            InputProps={{
+                                endAdornment: <InputAdornment position="end">lbs</InputAdornment>,
+                            }}
+                            value={weight}
+                            type="number"
+                            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                                setWeight(event.target.valueAsNumber);
+                            }} />
                     </Stack>
-                    {itemState.bucketType != undefined && itemState.itemType != undefined &&
+                    {itemState.bucketType != undefined && itemState.itemType != undefined && weight > 0 &&
                         <Button variant="contained" onClick={submitData}>Submit</Button>
                     }
                 </Grid>
