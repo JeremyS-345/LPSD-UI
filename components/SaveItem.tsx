@@ -1,7 +1,6 @@
 import OptionPicker from "@/components/itemSelect";
 import { Autocomplete, Button, Grid, InputAdornment, Stack, TextField, ToggleButton, ToggleButtonGroup, Typography } from "@mui/material";
 import { useState } from "react";
-import axios from "axios";
 import { ItemState } from "../pages/index";
 import { useRouter } from "next/router";
 
@@ -23,22 +22,29 @@ export default function SaveItem(props: { itemState: ItemState }) {
     }
     const postItem = async (itemState: ItemState) => {
 
-        router.push('/')
-        // const response = await axios.post("https://8e8oow3g70.execute-api.us-east-1.amazonaws.com/dev/lpds",
-        //     itemState,
-        //     { headers: headers });
-        // if (response.status == 202) {
-        //     setItemState(state => {
-        //         return {
-        //             id: undefined,
-        //             bucketType: undefined,
-        //             itemType: undefined,
-        //             reasonType: undefined,
-        //             weight: undefined 
-        //         }
-        //     })
-        // }
-        // return response.status;
+        const response = await fetch("http://localhost:8010/proxy/dev/lpds",
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(itemState)
+            });
+        if (response.status == 202) {
+            console.log("test234234")
+            router.push('/')
+            setItemState(state => {
+                return {
+                    id: undefined,
+                    bucketType: undefined,
+                    itemType: undefined,
+                    reason: undefined,
+                    weight: 0,
+                    source: "",
+
+                }
+            })
+        }
     };
 
     const submitData = () => {
@@ -130,7 +136,7 @@ export default function SaveItem(props: { itemState: ItemState }) {
                         />
                     </Stack>
                     {itemState.bucketType != undefined && itemState.itemType != undefined && itemState.weight > 0 &&
-                        <Button sx={{mt: 2}} variant="contained" onClick={submitData}>Submit</Button>
+                        <Button sx={{ mt: 2 }} variant="contained" onClick={submitData}>Submit</Button>
                     }
                 </Grid>
             </Grid>

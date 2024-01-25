@@ -41,15 +41,26 @@ export default function UpdateItem() {
             //         ...item
             //     }
             // })
-            const response = await axios.get("https://8e8oow3g70.execute-api.us-east-1.amazonaws.com/domainattached/lpds&"+name,
-                {headers: headers, withCredentials:false});
-            if (response.status == 202) {
+            const response = await fetch("http://localhost:8010/proxy/dev/lpds?itemID=88038fd8-fff5-4b57-8ab3-d518df0adef2",
+                {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        // 'access-control-allow-origin': '*',
+                        // 'Access-Control-Allow-Credentials': 'true',
+                        // 'Access-Control-Allow-Origin': '*',
+                        // "Access-Control-Allow-Methods": "GET,OPTIONS,PATCH,DELETE,POST,PUT",
+                        // "Access-Control-Allow-Headers": "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version",
+                    },
+                });
+            const data = await response.json()
+            console.log(data)
+            if (response.status == 200) {
                 setItemState(state => {
-            return {
-                ...response.data
-            }
-
-            })
+                    return {
+                        ...data
+                    }
+                })
             }
             return response.status;
         } catch {
