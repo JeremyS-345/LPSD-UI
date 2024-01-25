@@ -20,34 +20,38 @@ export default function UpdateItem() {
     const headers = {
         'Content-Type': 'application/json',
         'X-Requested-With': null,
-        'access-control-allow-origin': '*'
+        'access-control-allow-origin': '*',
+        "Access-Control-Allow-Credentials": "true",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET,OPTIONS,PATCH,DELETE,POST,PUT",
+        "Access-Control-Allow-Headers": "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version",
     }
     const getItem = async () => {
         try {
-            let item: ItemState = {
-                id: "qwerty1234",
-                bucketType: "donation",
-                itemType: "chicken",
-                reason: "blemished",
-                weight: 5.5,
-                source: "Mountaintop Farms"
-            }
-            setItemState(state => {
-                return {
-                    ...item
-                }
-            })
-            // const response = await axios.get("https://8e8oow3g70.execute-api.us-east-1.amazonaws.com/dev/lpds&"+name,
-            //     {headers: headers});
-            // if (response.status == 202) {
-            //     setItemState(state => {
-            // return {
-            //     ...response.data
+            // let item: ItemState = {
+            //     id: "qwerty1234",
+            //     bucketType: "donation",
+            //     itemType: "chicken",
+            //     reason: "blemished",
+            //     weight: 5.5,
+            //     source: "Mountaintop Farms"
             // }
-
+            // setItemState(state => {
+            //     return {
+            //         ...item
+            //     }
             // })
-            // }
-            // return response.status;
+            const response = await axios.get("https://8e8oow3g70.execute-api.us-east-1.amazonaws.com/domainattached/lpds&"+name,
+                {headers: headers, withCredentials:false});
+            if (response.status == 202) {
+                setItemState(state => {
+            return {
+                ...response.data
+            }
+
+            })
+            }
+            return response.status;
         } catch {
 
         }
